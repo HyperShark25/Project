@@ -9,11 +9,15 @@
     }
 </style>
 <body>
-<li><a class="getstarted scrollto" href="dragon/logout">
+<li><a class="getstarted scrollto" href="logout">
     <button> Log Out</button>
 </a></li>
+<br>
+<li><a class="getstarted scrollto" href="hello">
+    <button> Register account data through a form</button>
+</a></li>
 {% for item in a %}
-<a style="text-decoration:none; color: red" href="/dragon/{{item.id}}">
+<a style="text-decoration:none; color: red" href="/{{item.id}}">
     <h1>
         {{item.user}}
     </h1>
@@ -21,19 +25,20 @@
 <h3>
     Last updated in {{item.date_created}}
 </h3>
-<a style="text-decoration:none; color: blue" href="/dragon/{{item.id}}">
+<a style="text-decoration:none; color: blue" href="/{{item.id}}">
     <input type="submit">
+    <h4>{{ item.topic|truncatewords:15 }}</h4>
     {% endfor %}
 </a>
 </body>
 {% else %}
 <h1>If you haven't logged in yet <br>
     You can Log in now</h1>
-<li><a class="getstarted scrollto" href="dragon/login">
+<li><a class="getstarted scrollto" href="login">
     <button>Log IN</button>
 </a></li>
-<h2> or you canRegister</h2>
-<li><a class="getstarted scrollto" href="dragon/register">
+<h2> or you can Register</h2>
+<li><a class="getstarted scrollto" href="register">
     <button>Register</button>
 </a></li>
 {% endif %}

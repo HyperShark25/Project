@@ -2,13 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core import validators
 
 
 class Device(models.Model):
     ch2 = [
         ("👍", "👍"), ("👎", "👎")
     ]
-    title = models.CharField(max_length=20)
+    title = models.CharField(
+        max_length=20, validators=[validators.MinLengthValidator(5, "Please enter 5 or more characters")]
+    )
+    topic = models.TextField(null=True)
     serial_number = models.IntegerField(null=True)
     user = models.ForeignKey(User, help_text="The username attached to it", on_delete=models.CASCADE)
     date_created = models.DateTimeField(default="")
@@ -32,3 +36,12 @@ class LOD(models.Model):
     ]
     option = models.BooleanField(choices=ch)
     option2 = models.CharField(choices=ch2, max_length=30, null=True)
+
+
+class Connection(models.Model):
+    device = models.OneToOneField(Device, on_delete=models.CASCADE)
+    title = models.CharField(max_length=18)
+    pin_number = models.IntegerField()
+    
+    def __str__(self):
+        return self.title

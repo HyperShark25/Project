@@ -70,3 +70,67 @@ class DeviceView(APIView):
 #         'rest_framework.authentication.TokenAuthentication'
 #     ]
 # }
+
+
+# Django Forms are used to create any kind of HTML form while ModelForms are used
+# specifically to create forms based on Django Models for fast database updates and
+# save automation.
+
+
+# pip install django
+# pip install djangorestframework
+
+# django-admin startproject myproject
+# cd myproject
+# python manage.py startapp myapp
+
+
+# models.py
+from django.db import models
+
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+
+# serializers.py
+from rest_framework import serializers
+from .models import MyModel
+
+
+class MyModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyModel
+        fields = '__all__'
+
+
+
+# views.py
+from rest_framework import generics
+from .models import MyModel
+from .serializers import MyModelSerializer
+
+class MyModelList(generics.ListAPIView):
+    queryset = MyModel.objects.all()
+    serializer_class = MyModelSerializer
+
+
+# urls.py
+from django.urls import path
+from myapp.views import MyModelList
+
+urlpatterns = [
+    path('mymodels/', MyModelList.as_view()),
+]
+
+
+__________________________________________________________________________________
+# class DeviceSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()     # This is used to return the foreign key of user as a string
+    instead of integer
+#    title = serializers.HyperlinkedRelatedField(view_name="Device", read_only=True, many=True)
+
+    class Meta:
+        model = Device
+        fields = "__all__"

@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
-from .serializers import DeviceSerializer
-from .models import Device, New, LOD
+from .serializers import DeviceSerializer, ConnectionSerializer
+from .models import Device, New, LOD, Connection
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import authenticate
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, UpdateView
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .forms import DeviceForm
+from rest_framework import generics
+from django.urls import reverse
 
 
 class DeviceView(APIView):
@@ -23,6 +25,11 @@ class DeviceView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+
+class ConnectionView(generics.ListAPIView):
+    queryset = Connection.objects.all()
+    serializer_class = ConnectionSerializer
 
 
 def second(request, pk):
@@ -74,7 +81,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('dragon')
+            return redirect('/')
 
         else:
             messages.info(request, 'Credentials Invalid')
@@ -85,7 +92,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('dragon')
+    return redirect('/')
 
 
 # class MainViewClass(ListView):
@@ -99,13 +106,19 @@ def logout(request):
 #     context['form'] = DeviceForm()
 #     return render(request, 'hello.html', context)
 
+class DeviceUpdateView(UpdateView):
+    model = Device
+    form_class = DeviceForm
+    template_name = 'hello2.html'
+    success_url = '/'
+
 
 def myform(request):
     if request.method == 'POST':
         form = DeviceForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('hello')
+        return redirect('/')
     else:
         form = DeviceForm()
     return render(request, 'hello.html', {'form': form})

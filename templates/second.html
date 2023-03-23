@@ -1,7 +1,11 @@
 <h1>Welcome {{a.user}} <br>
     Your {{a.title}} is ready and shall be launched at {{a.date_created}}<br>
 </h1>
-<h2>The serial number of this device is {{a.serial_number}}</h2>
+<h2>The serial number of this device is {{a.serial_number}}</h2><br>
+<h3>{{a.topic}}</h3>
 <li><a class="getstarted scrollto" href="logout">
     <button> Log Out</button>
+</a></li>
+<li><a class="getstarted scrollto" href="{% url 'hello2' pk=a.id %}">
+    <button> Edit Form </button>
 </a></li>
