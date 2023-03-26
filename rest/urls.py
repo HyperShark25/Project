@@ -25,6 +25,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path(r'', include(router.urls))
-    # path('api-auth/', include('rest_framework.urls')),
+    # path('api-patience/', include('rest_framework.urls')),
     path('', include('api.urls')),
+    path('au/', include('patience.urls'))
 ]

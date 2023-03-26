@@ -12,7 +12,7 @@ urlpatterns = [
 #    path('hello', MainViewClass.as_view()),
     path('register', views.register, name='register'),
     path('login/', views.login, name='login'),
-    path('logout', views.logout, name='logout'),
+    path('logout/', views.logout, name='logout'),
     path('hello', views.myform, name='hello'),
     path('lod', views.like, name='like'),
     path('api2', ConnectionView.as_view()),
