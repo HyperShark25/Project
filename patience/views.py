@@ -8,8 +8,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 
 
-class Login(LoginView):
-    template_name = 'login_profile.html'
+# class Login(LoginView):
+#     template_name = 'login.html'
     # success_url = reverse_lazy('au')
 
     # def get_success_url(self):
@@ -23,10 +23,11 @@ class Login(LoginView):
 # class Logout(LogoutView):
 #     next_page = '/'
 
-class Register(generic.CreateView):
-    form_class = BlogForm
-    template_name = 'create_profile.html'
-    success_url = reverse_lazy('login_profile')
+
+# class Register(generic.CreateView):
+#     form_class = BlogForm
+#     template_name = 'create_profile.html'
+#     success_url = reverse_lazy('login_profile')
 
 
 @login_required
